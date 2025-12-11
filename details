@@ -1,0 +1,87 @@
+✅ Core Scenarios You Already Have
+
+✔ Registration
+✔ Login
+✔ Fetch user data
+✔ Fetch animal photos + description
+✔ Fetch different trees + leaf info
+✔ Book tickets with different prices (men / women / kids <14)
+
+⭐ Additional Important Scenarios You Should Add
+
+1️⃣ Payment & Booking Flow
+✔ Online payment gateway integration (UPI, Card, Net Banking)
+✔ Generate booking confirmation PDF / ticket
+✔ User can cancel booking
+✔ Refund policy handling
+
+2️⃣ Safari Time Slots & Availability
+✔ Fetch available safari timings (Morning, Noon, Evening)
+✔ Real-time seat availability
+✔ Limit on total bookings per session
+✔ Special night safari option (if applicable)
+
+3️⃣ Guide / Vehicle Options
+✔ Choose jeep / bus / private vehicle
+✔ Add-on cost for trained safari guide
+✔ Maximum seats per vehicle
+✔ Separate pricing for:
+Indian citizens
+Foreign tourists
+
+4️⃣ User Dashboard
+✔ View previous bookings
+✔ Download tickets
+✔ Track payment status
+✔ Manage profile + family members
+✔ Wishlist animals or trees
+
+5️⃣ Wildlife Information Section
+✔ Animal habitats and zones
+✔ Danger level / Safe distance instructions
+✔ Audio guide: animal sounds
+✔ Fun facts for kids
+
+6️⃣ Map & Tracking
+✔ Interactive Jungle Map
+✔ Mark zones: Tiger zone, Elephant area, Bird watching area
+✔ Real-time GPS of safari route (optional)
+✔ Show nearest:
+Water points
+Watch towers
+Rest area
+
+7️⃣ Staff / Admin Panel
+✔ Admin login
+✔ Add/Edit animals
+✔ Add/Edit trees
+✔ Update ticket prices
+✔ Check daily bookings
+✔ Manage availability / timings
+✔ Dashboard for total footfall
+
+8️⃣ Emergency / Safety System
+✔ SOS button
+✔ First-aid instructions
+✔ Emergency contact numbers
+✔ Nearest medical station info
+
+9️⃣ Review & Rating System
+✔ Rate safari experience
+✔ Review guides
+✔ Share photos
+✔ Report issues
+
+🔟 Notification System
+✔ SMS/Email ticket alerts
+✔ Safari reminder notifications
+✔ Weather alerts
+
+🎯 Your project becomes more powerful if you add these advanced features
+Recommend Safari Based on Preferences
+If user likes birds → show bird watching route
+If user likes big cats → show tiger zone
+Gamification for Kids
+Safari badges
+Animal quiz
+Leaf matching game
