@@ -160,8 +160,80 @@ const fetchUserData = async (req, res) => {
     }
 }
 
+const logout = async (req, res) => {
+    try {
+        // Clear the token cookie
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None'
+        });
+
+        return res.status(200)
+            .json({
+                success: true,
+                message: 'Logout successful'
+            });
+    } catch (error) {
+        console.error('Logout Error:', error);
+        return res.status(500).json({ message: 'Server Error' });
+    }
+}
+
+const refreshToken = async (req, res) => {
+    try {
+        // Assuming the token is in cookies, verify it and issue a new one
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401)
+                .json({
+                    success: false,
+                    message: 'No token provided'
+                });
+        }
+
+        // Verify the token
+        const decoded = jwt.verify(token, process.env.JWT_TOKEN);
+
+        // Generate a new token
+        const newToken = jwt.sign(
+            {
+                _id: decoded._id,
+                role: decoded.role
+            },
+            process.env.JWT_TOKEN,
+            {
+                expiresIn: '7d'
+            }
+        );
+
+        // Set new cookie
+        const cookieOptions = {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None'
+        };
+
+        res.cookie('token', newToken, cookieOptions);
+
+        return res.status(200)
+            .json({
+                success: true,
+                message: 'Token refreshed',
+                data: {
+                    token: newToken
+                }
+            });
+    } catch (error) {
+        console.error('Refresh Token Error:', error);
+        return res.status(500).json({ message: 'Server Error' });
+    }
+}
+
 export {
     registration,
     login,
-    fetchUserData
+    fetchUserData,
+    logout,
+    refreshToken
 }

@@ -1,5 +1,5 @@
 import animalModel from "../model/animal.model.js";
-import { uploadToS3 } from "../utils/awsutils.js";
+import { uploadToS3, deleteFromS3 } from "../utils/awsutils.js";
 
 const addanimal = async (req, res) => {
     try {
@@ -129,7 +129,7 @@ const fetchAllAnimals = async (req, res) => {
         // Return the fetched animals
         return res.status(200)
             .json({
-                success: false,
+                success: true,
                 message: 'Animals fetched successfully!',
                 data: {
                     fetchAnimals,
@@ -248,8 +248,87 @@ const updateAnimal = async (req, res) => {
     }
 }
 
+const getAnimalById = async (req, res) => {
+    try {
+        const animalId = req.params.id;
+        const animal = await animalModel.findById(animalId);
+
+        if (!animal) {
+            return res.status(404).json({
+                success: false,
+                message: 'Animal not found!'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Animal fetched successfully!',
+            data: { animal }
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: 'Server error!'
+        });
+    }
+}
+
+const deleteAnimal = async (req, res) => {
+    try {
+        const user = req.user;
+
+        // Only admins can delete animals
+        if (user.role !== 'admin') {
+            return res.status(403).json({
+                success: false,
+                message: 'Only admin can delete an animal!'
+            });
+        }
+
+        const animalId = req.params.id;
+        const animal = await animalModel.findById(animalId);
+
+        if (!animal) {
+            return res.status(404).json({
+                success: false,
+                message: 'Animal not found!'
+            });
+        }
+
+        // Delete images from S3
+        if (animal.main_image) {
+            await deleteFromS3(animal.main_image);
+        }
+        if (animal.images && animal.images.length > 0) {
+            for (const imageUrl of animal.images) {
+                await deleteFromS3(imageUrl);
+            }
+        }
+
+        // Delete from database
+        await animalModel.findByIdAndDelete(animalId);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Animal deleted successfully!',
+            data: { animal }
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: 'Server error!'
+        });
+    }
+}
+
 export {
     addanimal,
     fetchAllAnimals,
-    updateAnimal
+    updateAnimal,
+    getAnimalById,
+    deleteAnimal
 }
